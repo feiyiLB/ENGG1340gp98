@@ -38,3 +38,8 @@ In-code documentation:
 
 7. Include comments and descriptions for functions, variables, and other important elements.
 In "Galactic Trader," the player will navigate a vast and ever-changing galaxy, making strategic decisions to maximize their profits and survive the dangers of space. The project will showcase your skills in C/C++ programming, data structures, dynamic memory management, and file handling, while also demonstrating your ability to design and implement an engaging and strategic text-based game.
+
+**Note: **
+
+- [x] When you want to use a list, think about whether linked list would be a better choice.
+- [x] When you are struggling with dynamic memory allocation, Use chatgpt to solve it. 
