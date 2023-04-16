@@ -23,7 +23,6 @@ void generateGalaxy(Galaxy* galaxy) {
 
         initPlanet(&galaxy->planets[i], planet_names[name_index], distance);
         generateMarketPrices(&galaxy->planets[i]);
-
         // Remove the used planet name and distance
         for (int j = name_index; j < num_planet_names - 1; ++j) {
             planet_names[j] = planet_names[j + 1];
