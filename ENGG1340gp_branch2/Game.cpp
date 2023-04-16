@@ -9,6 +9,22 @@
 
 using namespace std;
 
+void displayPlanetNamesAndDistances(Planet* planets, int num_planets, Planet* current_planet) {
+    std::cout << "Planet list:\n";
+    for (int i = 0; i < num_planets; i++) {
+        int distance = abs(planets[i].distance_from_sun - current_planet->distance_from_sun);
+        std::cout << (i + 1) << ". " << planets[i].name << " (" << distance << " units away)\n";
+    }
+}
+void displayMarketPrices(Planet* current_planet) {
+    const char* goods[] = {"Food", "Water", "Fuel", "Metals"};
+
+    std::cout << "Market prices on " << current_planet->name << ":\n";
+    for (int i = 0; i < 4; ++i) {
+        std::cout << goods[i] << ": " << current_planet->marketPrices[i] << "\n";
+    }
+}
+
 void generateAndExecuteEvent(Game* game) {
     int event_type = rand() % 2;
 
@@ -18,6 +34,7 @@ void generateAndExecuteEvent(Game* game) {
     } else {
         cout << "No event occurred.\n";
     }
+    displayPlanetNamesAndDistances(game->galaxy.planets,7, game->current_planet);
 }
 void displayMenu() {
     cout << "Menu:\n";

@@ -5,11 +5,12 @@
 #include "Player.h"
 #include "Galaxy.h"
 #include "Event.h"
-
+#include "Planet.h"
 struct Game {
     Player player;
     Galaxy galaxy;
     Planet* current_planet;
+    Planet* planet;
 };
 
 void displayMenu();
