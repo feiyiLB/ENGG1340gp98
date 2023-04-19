@@ -9,16 +9,22 @@
 
 using namespace std;
 
+void displayMarketPrices(Planet* current_planet);
+void generateAndExecuteEvent(Game* game);
 void displayPlanetNamesAndDistances(Planet* planets, int num_planets, Planet* current_planet) {
     std::cout << "Planet list:\n";
+    const char* goods[] = {"Food", "Water", "Fuel", "Metals"};
     for (int i = 0; i < num_planets; i++) {
         int distance = abs(planets[i].distance_from_sun - current_planet->distance_from_sun);
-        std::cout << (i + 1) << ". " << planets[i].name << " (" << distance << " units away)\n";
+        cout << (i + 1) << ". " << planets[i].name << " (" << distance << " units away)\n";
+        for (int j = 0; j < 4; ++j) {
+        cout << goods[j] << ": " << planets[i].marketPrices[j] << "HKD\n";
+        }       
+        cout<<"-------------------------------------------------------------------------"<<endl;
     }
 }
 void displayMarketPrices(Planet* current_planet) {
     const char* goods[] = {"Food", "Water", "Fuel", "Metals"};
-
     std::cout << "Market prices on " << current_planet->name << ":\n";
     for (int i = 0; i < 4; ++i) {
         std::cout << goods[i] << ": " << current_planet->marketPrices[i] << "\n";
