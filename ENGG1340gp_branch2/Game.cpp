@@ -8,7 +8,8 @@
 #include <limits>
 
 using namespace std;
-
+void TravelGame(Game *game);
+void Deal(Game* game);
 void displayMarketPrices(Planet* current_planet);
 void generateAndExecuteEvent(Game* game);
 void displayPlanetNamesAndDistances(Planet* planets, int num_planets, Planet* current_planet) {
@@ -22,6 +23,7 @@ void displayPlanetNamesAndDistances(Planet* planets, int num_planets, Planet* cu
         }       
         cout<<"-------------------------------------------------------------------------"<<endl;
     }
+
 }
 void displayMarketPrices(Planet* current_planet) {
     const char* goods[] = {"Food", "Water", "Fuel", "Metals"};
@@ -32,8 +34,8 @@ void displayMarketPrices(Planet* current_planet) {
 }
 
 void generateAndExecuteEvent(Game* game) {
+    
     int event_type = rand() % 2;
-
     if (event_type == 0) {
         PirateEvent pirate_event;
         execute_pirate_event(&game->player, &pirate_event);
@@ -63,6 +65,7 @@ void run(Game* game) {
     srand(time(0));
     initPlayer(&game->player);
     addCargo(&game->player, "food", 20);
+    addCargo(&game->player, "money", 100000);
     initGalaxy(&game->galaxy, 7);
     game->current_planet = &game->galaxy.planets[0];
     int choice;
@@ -75,7 +78,8 @@ void run(Game* game) {
                 displayCargo(game);
                 break;
             case 2:
-                generateAndExecuteEvent(game);
+                displayPlanetNamesAndDistances(game->galaxy.planets,7, game->current_planet);
+                TravelGame(game);
                 break;
             case 3:
                 running = false;
@@ -89,3 +93,93 @@ void run(Game* game) {
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
 }
+
+
+void TravelGame(Game *game){
+    int choice;
+    bool running = true;
+    while (running) {
+        cout<<"Please input which planet you want to travel to [1-7]"<<endl;
+        cout<<"8. display Item"<<endl;
+        cout<<"9. exit"<<endl;
+        cin >> choice;
+        if(choice>0 && choice<8){
+            game->current_planet=&game->galaxy.planets[choice-1];
+            cout << "You have arrived at " << game->current_planet->name << endl;
+            generateAndExecuteEvent(game);
+            displayMarketPrices(game->current_planet);
+            Deal(game);
+        }else if(choice==8){
+            displayCargo(game);
+        }else if(choice==9){
+            running=false;
+        }else{
+            cout<<"Invalid input"<<endl;  
+        }
+
+}
+}
+
+void Deal(Game* game) {
+    int choice;
+    const char* goods[] = {"food", "water", "fuel", "metals"};
+
+    cout << "Deal options:\n";
+    cout << "1. Sell\n";
+    cout << "2. Buy\n";
+    cout << "Enter your choice: ";
+    cin >> choice;
+
+    if (choice == 1 || choice == 2) {
+        int good_choice;
+        int quantity;
+
+        cout << "Choose the good:\n";
+        for (int i = 0; i < 4; ++i) {
+            cout << (i + 1) << ". " << goods[i] << endl;
+        }
+        cout << "Enter your choice: ";
+        cin >> good_choice;
+
+        if (good_choice > 0 && good_choice <= 4) {
+            cout << "Enter quantity: ";
+            cin >> quantity;
+            int price = game->current_planet->marketPrices[good_choice - 1];
+            if (choice == 1) { // Selling
+                // Check if the player has enough items in their cargo to sell
+                int current_item_quantity = getCargoQuantity(&game->player, goods[good_choice - 1]);
+                if (current_item_quantity >= quantity) {
+                    // Update cargo: remove the items from the player's inventory
+                    removeCargo(&game->player, goods[good_choice - 1], quantity);
+
+                    // Add money to the player's cargo
+                    addCargo(&game->player, "money", quantity * price);
+                } else {
+                    cout << "Not enough items in the cargo to sell.\n";
+                }
+            } else if (choice == 2) { // Buying
+                // Check if the player has enough money
+                int current_money = getCargoQuantity(&game->player, "money");
+                if (current_money >= (quantity * price)) {
+                    // Update cargo: add the items to the player's inventory
+                    addCargo(&game->player, goods[good_choice - 1], quantity);
+
+                    // Remove money from the player's cargo
+                    removeCargo(&game->player, "money", quantity * price);
+                } else {
+                    cout << "Not enough money to buy the items.\n";
+                }
+            }
+        } else {
+            cout << "Invalid good choice. Please try again.\n";
+        }
+    } else {
+        cout << "Invalid deal choice. Please try again.\n";
+    }
+}
+
+
+//Why when I sell the a specific item, it only call removeCargo
+//It should also add the money to the cargo
+//same for the buy
+//money should be removed from cargo when I buy it 
