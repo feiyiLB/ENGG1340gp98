@@ -3,6 +3,7 @@
 #include "Planet.h"
 #include "Player.h"
 #include "CargoItem.h"
+#include "SaveLoad.h" // Include the SaveLoad header
 #include <ctime>
 #include <cstdlib>
 #include <limits>
@@ -45,11 +46,14 @@ void generateAndExecuteEvent(Game* game) {
     }
     displayPlanetNamesAndDistances(game->galaxy.planets,7, game->current_planet);
 }
+
 void displayMenu() {
     cout << "Menu:\n";
     cout << "1. Display cargo\n";
     cout << "2. Travel to another planet (may trigger an event)\n";
-    cout << "3. Exit game\n";
+    cout << "3. Save game\n";
+    cout << "4. Load game\n";
+    cout << "5. Exit game\n";
     cout << "Enter your choice: ";
 }
 
@@ -87,9 +91,24 @@ void run(Game* game) {
                 displayPlanetNamesAndDistances(game->galaxy.planets,7, game->current_planet);
                 TravelGame(game);
                 break;
-            case 3:
+            case 3: // Save game
+                {
+                    string filename;
+                    cout << "Enter a file name to save your game: ";
+                    cin >> filename;
+                    saveGame(game, filename);
+                }
+                break;
+            case 4: // Load game
+                {
+                    string filename;
+                    cout << "Enter a file name to load a saved game: ";
+                    cin >> filename;
+                    loadGame(game, filename);
+                }
+                break;
+            case 5:
                 running = false;
-                //写入文件
                 break;
             default:
                 cout << "Invalid choice. Please try again.\n";
@@ -99,6 +118,9 @@ void run(Game* game) {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
+
+
+
 }
 
 
