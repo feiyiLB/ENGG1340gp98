@@ -7,7 +7,7 @@ void execute_pirate_event(Player* player, PirateEvent* pirate_event) {
     const char* goods[] = {"food", "water", "fuel", "metals", "money"};
     for (int i = 0; i < 5; ++i) {
         //srand((int)time(NULL));
-        pirate_event->stolen_goods[i] = rand() % (getCargoQuantity(player, goods[i]) + 1);
+        pirate_event->stolen_goods[i] = rand() % (getCargoQuantity(player, goods[i])/2 + 1);
         removeCargo(player, goods[i], pirate_event->stolen_goods[i]);
         std::cout << "The pirates stole " << pirate_event->stolen_goods[i] << " units of " << goods[i] << ".\n";
     }
@@ -65,7 +65,7 @@ void Container(Player* player)
                 else if(i == 2)
                 {
                     std::cout << "Gain Money : " << add[i] << " units.\n";
-                    addCargo(player,"moner",add[i]);
+                    addCargo(player,"money",add[i]);
                 }
                 else if(i == 3)
                 {

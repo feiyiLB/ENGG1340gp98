@@ -40,7 +40,7 @@ void displayMarketPrices(Planet* current_planet) {
 
 void generateAndExecuteEvent(Game* game) {
     
-    int event_type = rand() % 2;
+    int event_type = rand() % 5;
     if (event_type == 0) {
         PirateEvent pirate_event;
         execute_pirate_event(&game->player, &pirate_event);
@@ -69,7 +69,7 @@ void displayCargo(Game* game) {
     cout << "Metals: " << getCargoQuantity(&game->player, "metals") << "\n";
     cout << "Money: " << getCargoQuantity(&game->player, "money") << "\n";
     cout<<"-------------------------------------------------------------------------"<<endl;
-    if(getCargoQuantity(&game->player, "money")>10000){
+    if(getCargoQuantity(&game->player, "money")>100){
         displayPlayerAttributes(&game->player);
     }
 }
@@ -139,7 +139,9 @@ void TravelGame(Game *game){
         cout<<"9. exit"<<endl;
         cin >> choice;
         if(choice>0 && choice<8){
+            Travel(&game->player,game->current_planet, &game->galaxy.planets[choice-1]);
             game->current_planet=&game->galaxy.planets[choice-1];
+            
             cout << "You have arrived at " << game->current_planet->name << endl;
             generateAndExecuteEvent(game);
             displayMarketPrices(game->current_planet);
@@ -195,7 +197,7 @@ void Deal(Game* game) {
         } else if (game->current_planet->name == "Mars" && choice == 4) {
             cout << "Arm yourself" << endl;
             // Add code to handle buying weapons here
-            buyAttributeUpgrade(&game->player);
+            buyWeapon(&game->player);
             continue; // To skip the rest of the loop iteration and move to the next iteration
         } else if (game->current_planet->name == "Jupiter" && choice == 4) {
             cout << "Play BlackJack" << endl;

@@ -1,87 +1,96 @@
+/*
+Write a programme to display several weapons
+like "storm hammer", "Excaliber", "Tomahawk","Energy Vessel"
+for example
+the "storm hammer" costs 1000, with values of 10 assigning to Player Normal Attack 
+the "Excaliber" costs 500, with values of 5 assigning to Player Normal Attack
+The "Tomahawk" costs 300, with values of 3 assigning to Player Normal Attack
+The "Tomahawk" costs 500, with values of 10 assigning to Player Energy
+Same with the previous Weapons.cpp
+you need to displaythemenu(prices) for each weapon
+getweaponprice() and
+buyweapon() is similar withbuyattributeupgrade but for each weapon, the player can only buy it once
+*/
+
 #include "Weapons.h"
 #include "Player.h"
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
-void displayAttributeMenu(int current_money) {
-    cout << "Attribute upgrades menu:\n";
-    cout << "1. Player HP (Price: 11)\n";
-    cout << "2. Player Energy (Price: 10)\n";
-    cout << "3. Player Normal Attack (Price: 9)\n";
-    cout << "4. Player Defense (Price: 8)\n";
-    cout << "5. Display weapons menu\n";
-    cout << "6. Exit\n";
+typedef struct Weapon {
+    string name;
+    int price;
+    string attribute;
+    int value;
+} Weapon;
+
+vector<Weapon> weapons = {
+    {"Storm Hammer", 1000, "Player Normal Attack", 10},
+    {"Excaliber", 500, "Player Normal Attack", 5},
+    {"Tomahawk", 300, "Player Normal Attack", 3},
+    {"Energy Vessel", 500, "Player Energy", 10}
+};
+
+void displayWeaponMenu(int current_money) {
+    cout << "Weapons menu:\n";
+    for (int i = 0; i < weapons.size(); ++i) {
+        cout << (i + 1) << ". " << weapons[i].name << " (Price: " << weapons[i].price << ")\n";
+    }
+    cout << weapons.size() + 1 << ". Exit\n";
     cout << "Current money: " << current_money << endl;
-    cout << "Enter your attribute choice: ";
+    cout << "Enter your weapon choice: ";
 }
 
-int getAttributePrice(int attribute_choice) {
-    switch (attribute_choice) {
-        case 1:
-            return 11;
-        case 2:
-            return 10;
-        case 3:
-            return 9;
-        case 4:
-            return 8;
-        default:
-            return -1;
+int getWeaponPrice(int weapon_choice) {
+    if (weapon_choice > 0 && weapon_choice <= weapons.size()) {
+        return weapons[weapon_choice - 1].price;
+    }
+    return -1;
+}
+
+void applyWeaponEffect(Player* player, int weapon_choice) {
+    string attribute = weapons[weapon_choice - 1].attribute;
+    int value = weapons[weapon_choice - 1].value;
+
+    if (attribute == "Player Normal Attack") {
+        player->player_normal_attack += value;
+    } else if (attribute == "Player Energy") {
+        player->player_energy += value;
     }
 }
 
-void buyAttributeUpgrade(Player* player) {
-    int attribute_choice;
-    int quantity;
+void buyWeapon(Player* player) {
+    int weapon_choice;
 
     while (true) {
         int current_money = getCargoQuantity(player, "money");
-        displayAttributeMenu(current_money);
-        cin >> attribute_choice;
+        displayWeaponMenu(current_money);
+        cin >> weapon_choice;
 
-        if (attribute_choice == 5) {
-            displayAttributeMenu(current_money);
-            continue;
-        } else if (attribute_choice == 6) {
+        if (weapon_choice == weapons.size() + 1) {
             break;
         }
 
-        cout << "Enter quantity: ";
-        cin >> quantity;
-
-        int price = getAttributePrice(attribute_choice);
+        int price = getWeaponPrice(weapon_choice);
         if (price == -1) {
-            cout << "Invalid attribute choice. Please try again.\n";
+            cout << "Invalid weapon choice. Please try again.\n";
             continue;
         }
 
-        int cost = quantity * price;
-
-        if (current_money >= cost) {
-            switch (attribute_choice) {
-                case 1:
-                    player->player_hp += quantity;
-                    break;
-                case 2:
-                    player->player_energy += quantity;
-                    break;
-                case 3:
-                    player->player_normal_attack += quantity;
-                    break;
-                case 4:
-                    player->player_defense += quantity;
-                    break;
-                default:
-                    cout << "Invalid attribute choice. Please try again.\n";
-                    continue;
-            }
+        if (current_money >= price) {
+            // Apply weapon effect
+            applyWeaponEffect(player, weapon_choice);
 
             // Deduct money from the player's cargo
-            removeCargo(player, "money", cost);
-            cout << "Attribute upgraded successfully!\n";
+            removeCargo(player, "money", price);
+            cout << "Weapon purchased successfully!\n";
+
+            // Remove purchased weapon from the vector
+            weapons.erase(weapons.begin() + weapon_choice - 1);
         } else {
-            cout << "Not enough money to buy the attribute upgrade.\n";
+            cout << "Not enough money to buy the weapon.\n";
         }
     }
 }

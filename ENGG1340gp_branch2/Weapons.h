@@ -3,8 +3,9 @@
 
 #include "Player.h"
 
-void displayAttributeMenu(int current_money);
-int getAttributePrice(int attribute_choice);
-void buyAttributeUpgrade(Player* player);
+void displayWeaponMenu(int current_money);
+int getWeaponPrice(int weapon_choice);
+void applyWeaponEffect(Player* player, int weapon_choice);
+void buyWeapon(Player* player);
 
 #endif // WEAPONS_H
