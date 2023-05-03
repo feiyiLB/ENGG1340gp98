@@ -10,5 +10,6 @@ struct PirateEvent {
 void execute_pirate_event(Player* player, PirateEvent* pirate_event);
 // Add this function declaration to Event.h
 void Travel(Player* player, Planet* current_planet, Planet* destination_planet);
+void Container(Player* player);
 
 #endif // EVENT_H

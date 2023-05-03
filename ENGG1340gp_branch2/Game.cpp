@@ -9,6 +9,9 @@
 #include <limits>
 #include <cstring>
 #include <algorithm>
+#include "boss.h"
+#include "Weapons.h"
+#include "BlackJack.h"
 using namespace std;
 void TravelGame(Game *game);
 void Deal(Game* game);
@@ -66,6 +69,9 @@ void displayCargo(Game* game) {
     cout << "Metals: " << getCargoQuantity(&game->player, "metals") << "\n";
     cout << "Money: " << getCargoQuantity(&game->player, "money") << "\n";
     cout<<"-------------------------------------------------------------------------"<<endl;
+    if(getCargoQuantity(&game->player, "money")>10000){
+        displayPlayerAttributes(&game->player);
+    }
 }
 
 void run(Game* game) {
@@ -158,12 +164,59 @@ void Deal(Game* game) {
         cout << "1. Sell\n";
         cout << "2. Buy\n";
         cout << "3. Display cargo\n";
-        if (game->current_planet->name== "Earth") {
-            cout << "4. Gamble the horse\n";
+
+        if (game->current_planet->name == "Earth") {
+            cout << "4. Challenge the boss\n";
+            cout << "5. Exit\n";
+        } else if (game->current_planet->name == "Mars") {
+            cout << "4. Arm yourself\n";
+            cout << "5. Exit\n";
+        }else if(game->current_planet->name == "Jupiter"){
+            cout << "4. Play BlackJack\n";
+            cout << "5. Exit\n";
+        }else if(game->current_planet->name == "Saturn"){
+            cout << "4. Saturn events\n";
+            cout << "5. Exit\n";
         }
-        cout << "5. Exit\n";
+        else {
+            cout << "4. Exit\n";
+        }
         cout << "Enter your choice: ";
         cin >> choice;
+
+        if (game->current_planet->name == "Earth" && choice == 4) {
+            int result = boss(&game->player); // Call the boss function
+            if (result == 1) { // You may want to modify the boss function to return 1 if the player wins
+                cout << "You have defeated the boss!" << endl;
+            } else {
+                cout << "You lost to the boss. Try again." << endl;
+            }
+            continue; // To skip the rest of the loop iteration and move to the next iteration
+        } else if (game->current_planet->name == "Mars" && choice == 4) {
+            cout << "Arm yourself" << endl;
+            // Add code to handle buying weapons here
+            buyAttributeUpgrade(&game->player);
+            continue; // To skip the rest of the loop iteration and move to the next iteration
+        } else if (game->current_planet->name == "Jupiter" && choice == 4) {
+            cout << "Play BlackJack" << endl;
+            int m=getCargoQuantity(&game->player, "money");
+            int bet=playBlackJack(m);
+            addCargo(&game->player,"money",bet);
+            continue; // To skip the rest of the loop iteration and move to the next iteration
+        }else if (game->current_planet->name == "Saturn" && choice == 4) {
+            cout << "Saturn Events" << endl;
+            // Add code to handle buying weapons here
+
+            continue; // To skip the rest of the loop iteration and move to the next iteration
+        }
+        else if (choice == 4) {
+            running = false;
+            continue; // To skip the rest of the loop iteration and move to the next iteration
+        }
+
+
+
+
 
         if (choice == 1 || choice == 2) {
             int good_choice;
@@ -198,7 +251,6 @@ void Deal(Game* game) {
                     if (current_money >= (quantity * price)) {
                         // Update cargo: add the items to the player's inventory
                         addCargo(&game->player, goods[good_choice - 1], quantity);
-
                         // Remove money from the player's cargo
                         removeCargo(&game->player, "money", quantity * price);
                     } else {
@@ -211,7 +263,7 @@ void Deal(Game* game) {
         } else if (choice == 3) {
             displayCargo(game);
         } else if (choice == 4 && game->current_planet->name== "Earth") {
-            cout<<"Horse"<<endl;
+            cout<<"Challenge the boss"<<endl;
         } else if (choice == 5) {
             running = false;
         } else {

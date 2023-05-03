@@ -1,8 +1,13 @@
 #include "Player.h"
 #include <cstring>
-
+using namespace std;
+#include <iostream>
 void initPlayer(Player* player) {
     player->head = nullptr;
+    player->player_hp = 0;
+    player->player_energy = 0;
+    player->player_normal_attack = 0;
+    player->player_defense = 0;
 }
 
 void freePlayer(Player* player) {
@@ -67,4 +72,43 @@ int getCargoQuantity(Player* player, const char* good) {
         current = current->next;
     }
     return 0;
+}
+
+void setPlayerHP(Player* player, int hp) {
+    player->player_hp = hp;
+}
+
+void setPlayerEnergy(Player* player, int energy) {
+    player->player_energy = energy;
+}
+
+void setPlayerNormalAttack(Player* player, int normal_attack) {
+    player->player_normal_attack = normal_attack;
+}
+
+void setPlayerDefense(Player* player, int defense) {
+    player->player_defense = defense;
+}
+
+void increasePlayerHP(Player* player, int hp_increase) {
+    player->player_hp += hp_increase;
+}
+
+void increasePlayerEnergy(Player* player, int energy_increase) {
+    player->player_energy += energy_increase;
+}
+
+void increasePlayerNormalAttack(Player* player, int normal_attack_increase) {
+    player->player_normal_attack += normal_attack_increase;
+}
+
+void increasePlayerDefense(Player* player, int defense_increase) {
+    player->player_defense += defense_increase;
+}
+void displayPlayerAttributes(Player* player) {
+    cout << "Player's attributes:" << endl;
+    cout << "Player HP: " << player->player_hp << endl;
+    cout << "Player Energy: " << player->player_energy << endl;
+    cout << "Player Normal Attack: " << player->player_normal_attack << endl;
+    cout << "Player Defense: " << player->player_defense << endl;
 }
