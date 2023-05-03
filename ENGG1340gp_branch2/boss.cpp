@@ -8,7 +8,7 @@ int boss(Player *player) {
     int player_energy = player->player_energy;
     int player_normal_attack =player->player_normal_attack;
     int player_defense = player->player_defense;
-    int boss_hp = 150;
+    int boss_hp = 200;
     int boss_normal_attack = 15;
     int round_num = 0;
     bool dis_skill = false;

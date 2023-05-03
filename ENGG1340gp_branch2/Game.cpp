@@ -15,10 +15,11 @@
 #include <chrono>
 #include <iostream>
 #include <unistd.h> // For sleep function
-
+#include <Windows.h>
 #include "BlackJack.h"
 using namespace std;
 void TravelGame(Game *game);
+void basicinfo();
 void Deal(Game* game);
 void displayMarketPrices(Planet* current_planet);
 void generateAndExecuteEvent(Game* game);
@@ -30,8 +31,10 @@ void displayPlanetNamesAndDistances(Planet* planets, int num_planets, Planet* cu
         cout << (i + 1) << ". " << planets[i].name << " (" << distance << " units away)\n";
         for (int j = 0; j < 4; ++j) {
         cout << goods[j] << ": " << planets[i].marketPrices[j] << "HKD\n";
-        }       
+        Sleep(500);
+        }
         cout<<"-------------------------------------------------------------------------"<<endl;
+        
     }
 
 }
@@ -52,19 +55,15 @@ void generateAndExecuteEvent(Game* game) {
     } else {
         cout << "No event occurred.\n";
     }
-    displayPlanetNamesAndDistances(game->galaxy.planets,7, game->current_planet);
+    //displayPlanetNamesAndDistances(game->galaxy.planets,7, game->current_planet);
 }
 
 void displayMenu() {
     cout << "Menu:\n";
     cout << "1. Display cargo\n";
-    sleep(1);
     cout << "2. Travel to another planet (may trigger an event)\n";
-    sleep(1);
     cout << "3. Save game\n";
-    sleep(1);
     cout << "4. Load game\n";
-    sleep(0.5);
     cout << "5. Exit game\n";
     cout << "Enter your choice: ";
 }
@@ -84,17 +83,21 @@ void displayCargo(Game* game) {
 }
 
 void run(Game* game) {
+    basicinfo();
     srand(time(0));
     initPlayer(&game->player);
     //if file cannot be opened
-    addCargo(&game->player, "food", 20);
-    addCargo(&game->player, "water", 20);
+    addCargo(&game->player, "food", 10);
+    addCargo(&game->player, "water", 10);
+    addCargo(&game->player, "fuel", 20);
+    addCargo(&game->player, "metal", 10);
     addCargo(&game->player, "money", 1000);
     // if file can be opened
     initGalaxy(&game->galaxy, 7);
     game->current_planet = &game->galaxy.planets[0];
     int choice;
     bool running = true;
+    
     while (running) {
         displayMenu();
         cin >> choice;
@@ -150,10 +153,9 @@ void TravelGame(Game *game){
         if(choice>0 && choice<8){
             Travel(&game->player,game->current_planet, &game->galaxy.planets[choice-1]);
             game->current_planet=&game->galaxy.planets[choice-1];
-            
             cout << "You have arrived at " << game->current_planet->name << endl;
-            generateAndExecuteEvent(game);
             displayMarketPrices(game->current_planet);
+            generateAndExecuteEvent(game);
             Deal(game);
         }else if(choice==8){
             displayCargo(game);
@@ -199,6 +201,8 @@ void Deal(Game* game) {
             int result = boss(&game->player); // Call the boss function
             if (result == 1) { // You may want to modify the boss function to return 1 if the player wins
                 cout << "You have defeated the boss!" << endl;
+                exit(0);
+                return;
                 //after winning end of the game
             } else {
                 cout << "You lost to the boss. Try again." << endl;
@@ -285,12 +289,7 @@ void Deal(Game* game) {
 }
 
 void basicinfo(){
-    cout << "      /^\\  " << endl;
-    cout << "     /   \\ " << endl;
-    cout << "    /  O  \\ " << endl;
-    cout << "   /_____\\  "<< endl;
-    cout << "      |||  " << endl;
-    cout << "      |||  " << endl;
+    
     cout << "Title: Space Trader: A Galactic Adventure\n\n";
     cout << "------------------User Guide---------------\n\n";
     cout << "Welcome to Space Trader: A Galactic Adventure! This guide will help you understand the game mechanics, objectives, and tips to become the ultimate space trader.\n\n";
@@ -321,6 +320,15 @@ void basicinfo(){
     cout << "2. You can beat the boss in the Earth\n";
     cout << "3. You can play BalckJack in Jupiter\n";
     cout << "4. You can do something else in Saturn";
+    cout << "\n";
+    cout << "\n";
+    cout << "\n";
+    cout << "      /^\\  " << endl;
+    cout << "     /   \\ " << endl;
+    cout << "    /  O  \\ " << endl;
+    cout << "   /_____\\  "<< endl;
+    cout << "      |||  " << endl;
+    cout << "      |||  " << endl;
 
 }
 

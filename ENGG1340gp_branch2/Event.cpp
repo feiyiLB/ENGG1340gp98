@@ -1,14 +1,14 @@
 #include "Event.h"
 #include <iostream>
 #include <cstdlib>
-
+#include <windows.h>
 void execute_pirate_event(Player* player, PirateEvent* pirate_event) {
     std::cout << "A pirate ship appears and steals some of your cargo!\n";
     const char* goods[] = {"food", "water", "fuel", "metals", "money"};
     for (int i = 0; i < 5; ++i) {
-        //srand((int)time(NULL));
         pirate_event->stolen_goods[i] = rand() % (getCargoQuantity(player, goods[i])/2 + 1);
         removeCargo(player, goods[i], pirate_event->stolen_goods[i]);
+        Sleep(500);
         std::cout << "The pirates stole " << pirate_event->stolen_goods[i] << " units of " << goods[i] << ".\n";
     }
 }
@@ -23,9 +23,9 @@ void execute_pirate_event(Player* player, PirateEvent* pirate_event) {
 // Add this function definition to Event.cpp
 void Travel(Player* player, Planet* current_planet, Planet* destination_planet) {
     int distance = abs(destination_planet->distance_from_sun - current_planet->distance_from_sun);
-    int food_consumption = distance * 10;
-    int water_consumption = distance * 5;
-    int fuel_consumption = distance * 20;
+    int food_consumption = distance * 1;
+    int water_consumption = distance * 1;
+    int fuel_consumption = distance * 3;
     removeCargo(player, "food", food_consumption);
     removeCargo(player, "water", water_consumption);
     removeCargo(player, "fuel", fuel_consumption);
