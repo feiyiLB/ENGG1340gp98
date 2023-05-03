@@ -11,6 +11,11 @@
 #include <algorithm>
 #include "boss.h"
 #include "Weapons.h"
+#include <thread>
+#include <chrono>
+#include <iostream>
+#include <unistd.h> // For sleep function
+
 #include "BlackJack.h"
 using namespace std;
 void TravelGame(Game *game);
@@ -53,9 +58,13 @@ void generateAndExecuteEvent(Game* game) {
 void displayMenu() {
     cout << "Menu:\n";
     cout << "1. Display cargo\n";
+    sleep(1);
     cout << "2. Travel to another planet (may trigger an event)\n";
+    sleep(1);
     cout << "3. Save game\n";
+    sleep(1);
     cout << "4. Load game\n";
+    sleep(0.5);
     cout << "5. Exit game\n";
     cout << "Enter your choice: ";
 }
@@ -69,7 +78,7 @@ void displayCargo(Game* game) {
     cout << "Metals: " << getCargoQuantity(&game->player, "metals") << "\n";
     cout << "Money: " << getCargoQuantity(&game->player, "money") << "\n";
     cout<<"-------------------------------------------------------------------------"<<endl;
-    if(getCargoQuantity(&game->player, "money")>100){
+    if(getCargoQuantity(&game->player, "money")>=0){
         displayPlayerAttributes(&game->player);
     }
 }
@@ -190,8 +199,10 @@ void Deal(Game* game) {
             int result = boss(&game->player); // Call the boss function
             if (result == 1) { // You may want to modify the boss function to return 1 if the player wins
                 cout << "You have defeated the boss!" << endl;
+                //after winning end of the game
             } else {
                 cout << "You lost to the boss. Try again." << endl;
+                //after lost the boss remove the money 
             }
             continue; // To skip the rest of the loop iteration and move to the next iteration
         } else if (game->current_planet->name == "Mars" && choice == 4) {
@@ -208,7 +219,6 @@ void Deal(Game* game) {
         }else if (game->current_planet->name == "Saturn" && choice == 4) {
             cout << "Saturn Events" << endl;
             // Add code to handle buying weapons here
-
             continue; // To skip the rest of the loop iteration and move to the next iteration
         }
         else if (choice == 4) {
@@ -281,6 +291,37 @@ void basicinfo(){
     cout << "   /_____\\  "<< endl;
     cout << "      |||  " << endl;
     cout << "      |||  " << endl;
+    cout << "Title: Space Trader: A Galactic Adventure\n\n";
+    cout << "------------------User Guide---------------\n\n";
+    cout << "Welcome to Space Trader: A Galactic Adventure! This guide will help you understand the game mechanics, objectives, and tips to become the ultimate space trader.\n\n";
+    cout << "---------Game Overview:---------------\n";
+    cout << "In Space Trader: A Galactic Adventure, you assume the role of a trader exploring the vast universe, buying and selling goods to amass a fortune, and ultimately, defeating the boss to become the most successful trader in the galaxy. Travel between planets, encounter random events, and face challenges to achieve your ultimate goal.\n\n";
+    cout << "------------Getting Started:------------\n";
+    cout << "The game begins with your character being initialized with a starting cargo of food, water, fuel, metals, and money. Your journey starts on Earth, and from there, you will travel to other planets in the galaxy to trade goods and make a profit.\n\n";
+    cout << "Controls and Navigation:\n";
+    cout << "The game is menu-driven, and you will make your selections by entering the corresponding number for each menu option. The main menu provides the following options:\n\n";
+    cout << "1. Display cargo - View your current inventory of goods and money.\n";
+    cout << "2. Travel to another planet - Choose a planet to travel to, potentially triggering events.\n";
+    cout << "3. Save game - Save your progress to a file.\n";
+    cout << "4. Load game - Load a saved game from a file.\n";
+    cout << "5. Exit game - End the game.\n\n";
+    cout << "-------------rading:---------------\n";
+    cout << "When you arrive at a new planet, you can trade goods (food, water, fuel, and metals) with the local market. Each planet has its own market prices for goods, so it's essential to buy low and sell high to make a profit. The trading menu provides the following options:\n\n";
+    cout << "1. Sell - Sell goods from your cargo.\n";
+    cout << "2. Buy - Buy goods to add to your cargo.\n";
+    cout << "3. Display cargo - View your current inventory.\n";
+    cout << "4. Planet-specific options - Participate in planet-specific events or challenges (e.g., Challenge the boss on Earth, Arm yourself on Mars, Play Blackjack on Jupiter, or Saturn events).\n";
+    cout << "5. Exit - Return to the main menu.\n\n";
+    cout << "Events and Challenges:\n";
+    cout << "During your travels, you may encounter random events, such as pirate attacks or other surprises. Each planet also offers unique challenges and events that can help you progress in the game. For example, you can buy weapons on Mars, play Blackjack on Jupiter, or challenge the boss on Earth.\n\n";
+    cout << "Defeating the Boss:\n";
+    cout << "The ultimate goal is to defeat the boss on Earth. To increase your chances of success, amass a fortune, trade goods, participate in planet-specific events, and arm yourself with powerful weapons.\n\n";
+    cout << "Tips for Success:\n\n";
+    cout << "1. You can arm your self in Mars\n";
+    cout << "2. You can beat the boss in the Earth\n";
+    cout << "3. You can play BalckJack in Jupiter\n";
+    cout << "4. You can do something else in Saturn";
+
 }
 
 

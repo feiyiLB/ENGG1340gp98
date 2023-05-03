@@ -4,10 +4,10 @@ using namespace std;
 #include <iostream>
 void initPlayer(Player* player) {
     player->head = nullptr;
-    player->player_hp = 0;
-    player->player_energy = 0;
-    player->player_normal_attack = 0;
-    player->player_defense = 0;
+    player->player_hp = 100;
+    player->player_energy = 10;
+    player->player_normal_attack = 5;
+    player->player_defense = 5;
 }
 
 void freePlayer(Player* player) {

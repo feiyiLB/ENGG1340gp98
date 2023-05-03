@@ -129,9 +129,8 @@ int boss(Player *player) {
     }
 
     // 游戏结束
-    if(player_hp<=0) cout<<"You lose the match"<<endl;
-    else cout<<"Congratulations! You win the match"<<endl;
-    return 0;
+    if(player_hp<=0) return 0;
+    else return 1;
 }
         
     
