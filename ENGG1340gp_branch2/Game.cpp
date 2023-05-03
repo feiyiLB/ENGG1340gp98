@@ -272,6 +272,14 @@ void Deal(Game* game) {
     }
 }
 
+void basicinfo(){
+    cout << "      /^\\  " << endl;
+    cout << "     /   \\ " << endl;
+    cout << "    /  O  \\ " << endl;
+    cout << "   /_____\\  "<< endl;
+    cout << "      |||  " << endl;
+    cout << "      |||  " << endl;
+}
 
 
 //Why when I sell the a specific item, it only call removeCargo
