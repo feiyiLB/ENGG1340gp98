@@ -17,6 +17,7 @@
 #include <unistd.h> // For sleep function
 #include <Windows.h>
 #include "BlackJack.h"
+#include "Dice.h"
 using namespace std;
 void TravelGame(Game *game);
 void basicinfo();
@@ -188,7 +189,7 @@ void Deal(Game* game) {
             cout << "4. Play BlackJack\n";
             cout << "5. Exit\n";
         }else if(game->current_planet->name == "Saturn"){
-            cout << "4. Saturn events\n";
+            cout << "4. Play Dice Game\n";
             cout << "5. Exit\n";
         }
         else {
@@ -221,8 +222,11 @@ void Deal(Game* game) {
             addCargo(&game->player,"money",bet);
             continue; // To skip the rest of the loop iteration and move to the next iteration
         }else if (game->current_planet->name == "Saturn" && choice == 4) {
-            cout << "Saturn Events" << endl;
+            cout << "Dice game" << endl;
             // Add code to handle buying weapons here
+            int m=getCargoQuantity(&game->player, "money");
+            int gain=Dice(m);
+            addCargo(&game->player,"money",gain);
             continue; // To skip the rest of the loop iteration and move to the next iteration
         }
         else if (choice == 4) {
@@ -326,7 +330,7 @@ void basicinfo(){
     cout << "      /^\\  " << endl;
     cout << "     /   \\ " << endl;
     cout << "    /  O  \\ " << endl;
-    cout << "   /_____\\  "<< endl;
+    cout << "   /_______\\  "<< endl;
     cout << "      |||  " << endl;
     cout << "      |||  " << endl;
 

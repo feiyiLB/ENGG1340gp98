@@ -7,7 +7,6 @@ int main() {
 }
 
 
-
 /*
 1. display cargoItem
 2. Travel to another planet

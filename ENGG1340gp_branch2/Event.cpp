@@ -2,6 +2,11 @@
 #include <iostream>
 #include <cstdlib>
 #include <windows.h>
+#include "Player.h"
+#include "Planet.h"
+#include <iostream>
+#include <cstdlib>
+#include <cmath>
 void execute_pirate_event(Player* player, PirateEvent* pirate_event) {
     std::cout << "A pirate ship appears and steals some of your cargo!\n";
     const char* goods[] = {"food", "water", "fuel", "metals", "money"};
@@ -14,11 +19,7 @@ void execute_pirate_event(Player* player, PirateEvent* pirate_event) {
 }
 
 // Add this function definition to Event.cpp#include "Event.h"
-#include "Player.h"
-#include "Planet.h"
-#include <iostream>
-#include <cstdlib>
-#include <cmath>
+
 
 // Add this function definition to Event.cpp
 void Travel(Player* player, Planet* current_planet, Planet* destination_planet) {
