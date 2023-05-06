@@ -1,9 +1,9 @@
 ####1.Team members
-- LU BO 3036104046
-- Yang Ziling 3036105911
-- Gao Zhuojing 3036102335
-- Yin Aobing 3036104034
-- Han Yuxin 3035974511
+- LU BO 3036104046 (feiyiLB)
+- Yang Ziling 3036105911 (AnsonYMM)
+- Gao Zhuojing 3036102335 (Granger19)
+- Yin Aobing 3036104034 (AobingYin)
+- Han Yuxin 3035974511 (asdacssda)
 
 ####2.Introduction of game and rules
 #####2.1 Background of game
