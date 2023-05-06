@@ -1,45 +1,31 @@
-###  ENGG1340gp  ###
-## Galactic Trader: ##
-In this game, the player becomes a space trader, traveling between planets to buy low and sell high. The player must manage their ship, cargo, and finances while avoiding pirates and other dangers.
-Key components:
+####1.Team members
+- LU BO 3036104046 (feiyiLB)
+- Yang Ziling 3036105911 (AnsonYMM)
+- Gao Zhuojing 3036102335 (Granger19)
+- Yin Aobing 3036104034 (AobingYin)
+- Han Yuxin 3035974511 (asdacssda)
+
+####2.Introduction of game and rules
+#####2.1 Background of game
+In this game, the player becomes a space trader, traveling between planets to **buy low and sell high**. The player must manage their ship, cargo, and finances while avoiding pirates and other dangers. Key components:
 - Procedurally generated galaxy map with various planets, trade routes, and events
-- Trading system with dynamic market prices influenced by supply and demand
 - Ship upgrades and customization options
 - Combat encounters with pirates and other hostile entities
-- Random events and encounters that can affect the player's journey
-
---------------------------------------------------------------
-**Here's how "Galactic Trader" can fulfill the project requirements:**
-
-1. Generation of random game sets or events:
-Generate a procedurally created galaxy map with various planets, trade routes, and events.
-Randomize the market prices for goods on different planets, influenced by supply and demand.
-Implement random events and encounters, such as pirate attacks, distress signals, or special trade opportunities.
-
-2. Data structures for storing game status:
-Use structs to represent the player's ship, planets, goods, and market prices.
-Implement a graph or adjacency matrix to represent the galaxy map and connections between planets.
-Use arrays or linked lists to manage the player's cargo and inventory.
-
-3. Dynamic memory management:
-Use pointers and dynamic memory allocation to create and manage game objects, such as planets, goods, and market prices.
-Implement functions to add, remove, or modify game objects as needed.
-
-4. File input/output:
-Implement functions to save the game state, including the player's progress, cargo, credits, and the state of the galaxy.
-Allow the player to load a saved game and resume playing from where they left off.
-
-5. Program codes in multiple files:
-Organize the code into multiple source files (e.g., main.c, galaxy.c, ship.c, market.c, etc.) and header files (e.g., galaxy.h, ship.h, market.h, etc.).
-
-6. Proper indentation and naming styles:
-Follow a consistent coding style and conventions throughout the project, such as indentation, variable naming, and function naming.
-In-code documentation:
-
-7. Include comments and descriptions for functions, variables, and other important elements.
-In "Galactic Trader," the player will navigate a vast and ever-changing galaxy, making strategic decisions to maximize their profits and survive the dangers of space. The project will showcase your skills in C/C++ programming, data structures, dynamic memory management, and file handling, while also demonstrating your ability to design and implement an engaging and strategic text-based game.
-
-**Note: **
-
-- [x] When you want to use a list, think about whether linked list would be a better choice.
-- [x] When you are struggling with dynamic memory allocation, Use chatgpt to solve it. 
+- **Random events** and encounters that can affect the player's journey
+#####2.2 Rules
+- The only way to end the game is **Win the boss**
+- The boss live on the **Earth**
+- Player should earn the money in order to **arm himself** because the boss is to0 strong
+- Mars is the **only planet** which allow player to arm himself
+- Player can use money to join the **mystery game** on Jupiter and Saturn which allow player get **a numerous amount of money** or **lost all the money**
+- Player **cannot travel** between planets without enough cargo (each unit distance cost 1 unit food, 1 unit water, 3 unit fuel)
+####3.Feature of game
+- This game also uses a linked list to get the quantity of trhe CargoItem and append and remove the quantity in CargoItem, which fulfills the dynamic mmemory management(Dynamic Memory Management)
+- The game builds structure of CargoItem in CargoItem.cpp and structures of weapons to store the attack points of weapons.(Data structures for storing game status)
+- This game allows users to save and load the data of the game by loading and saving the file. Players can choose save the file and enter the name of the file and the game will output "file saved successfully". After re-execute the main programme, "Load game" reads the data stored in the files if it can be found in the directory and allows player to play the game based on their former CargoItem. (File input/output)
+- The planet position, the market price for each planet, events during travel are all randomly generated, which fulfills  the generation of random game events.(Generation of Random events)
+- Apart from that, this game is formed by multiple files and meaningful variable name and proper indentation to make the programme more readable.
+####4.Compilation and execution instructions
+On **School Server**, input:
+1. make
+2. ./main
