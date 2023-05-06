@@ -73,6 +73,23 @@ int getCargoQuantity(Player* player, const char* good) {
     }
     return 0;
 }
+int getPlayerHP(const Player* player) {
+    return player->player_hp;
+}
+
+int getPlayerEnergy(const Player* player) {
+    return player->player_energy;
+}
+
+int getPlayerNormalAttack(const Player* player) {
+    return player->player_normal_attack;
+}
+
+int getPlayerDefense(const Player* player) {
+    return player->player_defense;
+}
+
+
 
 void setPlayerHP(Player* player, int hp) {
     player->player_hp = hp;
@@ -105,10 +122,11 @@ void increasePlayerNormalAttack(Player* player, int normal_attack_increase) {
 void increasePlayerDefense(Player* player, int defense_increase) {
     player->player_defense += defense_increase;
 }
-void displayPlayerAttributes(Player* player) {
+void displayPlayerAttributes(const Player* player) {
     cout << "Player's attributes:" << endl;
     cout << "Player HP: " << player->player_hp << endl;
     cout << "Player Energy: " << player->player_energy << endl;
     cout << "Player Normal Attack: " << player->player_normal_attack << endl;
     cout << "Player Defense: " << player->player_defense << endl;
+
 }

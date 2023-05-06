@@ -26,7 +26,13 @@ void increasePlayerHP(Player* player, int hp_increase);
 void increasePlayerEnergy(Player* player, int energy_increase);
 void increasePlayerNormalAttack(Player* player, int normal_attack_increase);
 void increasePlayerDefense(Player* player, int defense_increase);
-void displayPlayerAttributes(Player* player);
+void displayPlayerAttributes(const Player* player);
+// Getter functions for player attributes
+int getPlayerHP(const Player* player);
+int getPlayerEnergy(const Player* player);
+int getPlayerNormalAttack(const Player* player);
+int getPlayerDefense(const Player* player);
+
 #endif // PLAYER_H
 
 
